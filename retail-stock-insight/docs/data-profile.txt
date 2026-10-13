@@ -1,0 +1,147 @@
+======================================================================
+RETAIL STOCK INSIGHT — DATA PROFILE & ASSERTIONS
+Run at: 2026-10-13T10:02:11.073Z
+======================================================================
+
+── ROW COUNTS ──────────────────────────────────────────────────────
+  customers:   600
+  orders:      8000
+  order_items: 16418
+  products:    50
+  returns:     883
+  ✅ customers rows: got=600 expected=600
+  ✅ orders rows: got=8000 expected=8000
+  ✅ order_items rows: got=16418 expected=16418
+  ✅ products rows: got=50 expected=50
+  ✅ returns rows: got=883 expected=883
+
+── NULL/EMPTY CHECKS ───────────────────────────────────────────────
+  customers nulls in columns: NONE ✅
+  orders nulls in columns: NONE ✅
+  order_items nulls: NONE ✅
+  products nulls: NONE ✅
+  returns nulls: NONE ✅
+
+── DUPLICATE KEY CHECKS ────────────────────────────────────────────
+  customer_id dups: 0
+  order_id dups: 0
+  order_item_id dups: 0
+  product_id dups: 0
+  return_id dups: 0
+  ✅ customer_id duplicates: got=0 expected=0
+  ✅ order_id duplicates: got=0 expected=0
+  ✅ order_item_id duplicates: got=0 expected=0
+
+── ORPHAN FK CHECKS ─────────────────────────────────────────────────
+  orders with orphan customer_id: 0
+  order_items with orphan order_id: 0
+  order_items with orphan product_id: 0
+  returns with orphan order_id: 0
+  ✅ orders orphan customer_id: got=0 expected=0
+  ✅ items orphan order_id: got=0 expected=0
+  ✅ items orphan product_id: got=0 expected=0
+  ✅ returns orphan order_id: got=0 expected=0
+
+── DATE RANGES ──────────────────────────────────────────────────────
+  orders date range: 2024-01-01 to 2025-12-31
+  returns date range: 2024-01-14 to 2026-01-11
+  customers signup range: 2023-01-01 to 2025-10-28
+  returns after 2025-12-31: 11
+  ✅ orders start date: got=2024-01-01 expected=2024-01-01
+  ✅ orders end date: got=2025-12-31 expected=2025-12-31
+
+── ORDER STATUS COUNTS ──────────────────────────────────────────────
+  {"Delivered":6708,"Cancelled":409,"Returned":721,"Refunded":162}
+  ✅ Delivered count: got=6708 expected=6708
+  ✅ Returned count: got=721 expected=721
+  ✅ Cancelled count: got=409 expected=409
+  ✅ Refunded count: got=162 expected=162
+
+── PAYMENT METHODS: UPI, Debit Card, Credit Card, Wallet, Net Banking, Cash on Delivery (6 distinct) ──
+  ✅ payment method count: got=6 expected=6
+
+── SHIPPING FEES: 0, 49, 79, 99 ──
+
+── CUSTOMER ATTRIBUTES ──────────────────────────────────────────────
+  countries: Australia, Canada, Germany, India, Singapore, UAE, UK, USA (8)
+  regions: APAC, Europe, Middle East, North America (4)
+  cities: 25
+  channels: Affiliate, Direct, Email Marketing, Organic Search, Paid Search, Referral, Social Media (7)
+  tiers: Gold, Platinum, Silver, Standard (4)
+  ✅ countries count: got=8 expected=8
+  ✅ regions count: got=4 expected=4
+  ✅ cities count: got=25 expected=25
+  ✅ channels count: got=7 expected=7
+  ✅ tiers count: got=4 expected=4
+
+── CUSTOMERS WITH NO ORDERS: 6 ──
+  ✅ customers with no orders: got=6 expected=6
+
+── DISTINCT CUSTOMERS IN ORDERS: 594 ──
+  ✅ distinct customers in orders: got=594 expected=594
+
+── PRODUCTS ─────────────────────────────────────────────────────────
+  categories: {"Electronics":10,"Fashion":10,"Home & Kitchen":10,"Beauty & Personal Care":8,"Sports & Fitness":7,"Books & Stationery":5}
+  negative margin products: PROD0048(Fountain Pen Set)
+  ✅ products Electronics: got=10 expected=10
+  ✅ products Fashion: got=10 expected=10
+  ✅ products negative margin count: got=1 expected=1
+  ✅ negative margin product: got=PROD0048 expected=PROD0048
+
+── LINE_TOTAL VERIFICATION (quantity*unit_price*(1-discount_pct)) ──
+  line_total mismatches: 0
+  ✅ line_total formula matches: got=0 expected=0
+
+── ORDER_SUBTOTAL VERIFICATION ─────────────────────────────────────
+  order_subtotal mismatches: 0
+  ✅ order_subtotal matches sum(line_total): got=0 expected=0
+
+── TOTAL_AMOUNT VERIFICATION ────────────────────────────────────────
+  total_amount mismatches: 0
+  ✅ total_amount = subtotal + shipping_fee: got=0 expected=0
+
+── REFERENCE VALUE ASSERTIONS ───────────────────────────────────────
+  Gross sales (non-cancelled): 45420250.67
+  Gross sales (all incl. cancelled): 47948379.75
+  Orders (non-cancelled): 7591
+  Units sold (non-cancelled): 21558
+  Units sold (all): 22689
+  Refunds: 2289755.42
+  Net sales: 43130495.25
+  COGS: 22015395.83
+  Shipping revenue: 203183
+  Unique customers (non-cancelled): 593
+  ✅ Gross sales non-cancelled: got=45420250.67 expected=45420250.67
+  ✅ Gross sales incl cancelled: got=47948379.75 expected=47948379.75
+  ✅ Orders non-cancelled: got=7591 expected=7591
+  ✅ Units non-cancelled: got=21558 expected=21558
+  ✅ Units all: got=22689 expected=22689
+  ✅ Refunds: got=2289755.42 expected=2289755.42
+  ✅ Net sales: got=43130495.25 expected=43130495.25
+  ✅ COGS non-cancelled: got=22015395.83 expected=22015395.83
+  ✅ Shipping revenue non-cancelled: got=203183 expected=203183
+  ✅ Unique customers non-cancelled: got=593 expected=593
+
+  Return rate (order basis): 883/7591 = 11.63%
+  ✅ Return rate order basis %: got=11.63 expected=11.63
+
+── CATEGORY GROSS SALES (non-cancelled) ─────────────────────────────
+  Electronics: 11770997.36
+  Fashion: 10992408.87
+  Home & Kitchen: 8537954.80
+  Sports & Fitness: 8011954.23
+  Beauty & Personal Care: 3288118.34
+  Books & Stationery: 2818817.07
+  ✅ Electronics gross sales: got=11.770997 expected=11.77
+  ✅ Fashion gross sales: got=10.992409 expected=10.99
+  ✅ Home & Kitchen gross sales: got=8.537955 expected=8.54
+  ✅ Sports & Fitness gross sales: got=8.011954 expected=8.01
+  ✅ Beauty & Personal Care gross sales: got=3.288118 expected=3.29
+  ✅ Books & Stationery gross sales: got=2.818817 expected=2.82
+
+── REFUND AMOUNT = LINE_TOTAL VERIFICATION ──────────────────────────
+  refund_amount = line_total mismatches: 0
+  ✅ refund_amount equals line_total: got=0 expected=0
+
+── RETURNS order_item_id uniqueness: 883 unique / 883 total ──
+  ✅ return order_item_id unique: got=883 expected=883

@@ -1,0 +1,15 @@
+{
+  "name": "retail-stock-insight",
+  "version": "1.0.0",
+  "description": "Retail Stock Insight - Advanced Retail Analytics Dashboard",
+  "private": true,
+  "scripts": {
+    "server": "npm --prefix server start",
+    "server:dev": "npm --prefix server run dev",
+    "server:test": "npm --prefix server test",
+    "server:profile": "npm --prefix server run profile",
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "test": "npm --prefix server test"
+  }
+}
